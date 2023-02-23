@@ -1,15 +1,16 @@
 class Solution {
-  
+    int dp[100000+1][2][4+1];
 public:
     int maxProfit(vector<int>& prices) {
         
-        vector<vector<vector<int>>> dp(prices.size(), vector<vector<int>>(2, vector<int>(4+1, -1)));
+        // vector<vector<vector<int>>> dp(prices.size(), vector<vector<int>>(2, vector<int>(4+1, -1)));
+        memset(dp, -1, sizeof(dp));
         int n = prices.size();
         
         return dfs(prices, 0, 1, 4, dp);
     }
         
-    int dfs(vector<int>& prices, int idx, int canbuy, int transactionsLeft, vector<vector<vector<int>>>& dp){
+    int dfs(vector<int>& prices, int idx, int canbuy, int transactionsLeft, int dp[100000+1][2][4+1] ){
        if( prices.size() == idx)
             return 0;
         if( transactionsLeft==0 )
