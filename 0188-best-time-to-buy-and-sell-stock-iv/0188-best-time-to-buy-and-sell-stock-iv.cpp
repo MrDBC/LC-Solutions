@@ -7,9 +7,11 @@ public:
         memset(dp, -1, sizeof(dp));
         int n = prices.size();
         
-        // my definition of transaction = either buy or sell
-        // since its given we can do at most 2 transactions: it means we can buy twice  & sell twice 
-        // so total 4 transactions
+        // my definition of transaction :
+        // 1 buy = 1 transaction
+        // 1 sell = 1 transaction
+        // since its given we can do at most k transactions: it means we can buy k times  & sell k times 
+        // so at most (2*k) transactions
 
         //        (prices, index, we have to buy ist, so canbuy=1 ,no of transactions we can do)
         return dfs(prices, 0, 1, 2*k);
