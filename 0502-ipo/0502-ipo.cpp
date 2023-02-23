@@ -24,12 +24,14 @@ public:
             // is less than equal to the  "curr_capital" we have currently,
             // push the corresponding profits of those projects into our maxheap
            
+           // worst case: if all the projects have capital less than intial capital,
+           // then we will be pushing all of 'n' projects' profits into the priority queue in ist iteration
             while(i<n and cap_pro[i][0]<= curr_capital )  // TC: O(n log n) not every k times, but overall ( please note)   
                 max_profit.push(cap_pro[i++][1]);
         
             
             // if max_profit( priority queue) is empty, it means either of 2 things:
-            // 1. we have exhausted processing all our projects
+            // 1. we have exhausted by processing all our projects
             // 2. the projects left, have capital needs > our current capital
             // so just break 
             if( !max_profit.size())    // TC: O(1) 
@@ -44,13 +46,19 @@ public:
         }
         // overall TC for the while loop:
         // O(k) for the while loop iteration
-        // O(n*logn) we push maximum n elements in our maxheap('max_profit')and  pop max n times too
-        // so overall TC: O(max(k, nlog n))
+        // O(n*logn) we push maximum n elements in our maxheap('max_profit')
+        // so overall TC: O(max(k, nlog n)) if we remove the `break` condition
+        // but if we include the `break` condition, then i dont think `k` has a role to play in TC
+       // so overall TC: O( n log n) becoz even if we have k>> n, then also we will exit before k reaches 0
         
-        // overall for the whole algorithm:
-        // O(n logn) for sorting + O(max(k, nlog n)) for the while looop operations
-        // so overall TC: O(max(k, nlog n))
+        // overall for the whole algo:
+        // O(n logn) for sorting + O( nlog n) for the while looop operations
+        // so overall TC: O(nlog n)
+
+       // SC: O( n ) due to  vector<vector<int>> and for maxheap 
         
         return curr_capital;
     }
 };
+
+
