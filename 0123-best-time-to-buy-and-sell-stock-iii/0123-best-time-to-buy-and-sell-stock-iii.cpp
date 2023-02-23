@@ -1,5 +1,5 @@
 class Solution {
-    int dp[100000+1][2][4+1];
+    int dp[100000][2][4+1];
 public:
     int maxProfit(vector<int>& prices) {
         
