@@ -8,7 +8,7 @@ public:
             int mid = (low+high)/2;
             int sum = 0;
             int d = days;
-            bool flag = false;
+           //bool flag = false;
             for(auto &weight:weights){
                 sum +=weight;
                 if(sum>mid){
@@ -16,7 +16,7 @@ public:
                         sum = weight;
                         d--;
                     }else{
-                        flag = true;
+                        //flag = true;
                         break;
                     }
                 }
