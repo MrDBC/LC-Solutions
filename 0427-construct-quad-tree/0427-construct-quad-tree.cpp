@@ -37,34 +37,46 @@ public:
     }
 };
 */
+
 class Solution {
 public:
-    Node* helper(vector<vector<int>>&grid,int up,int down,int left,int right){
-        bool allsame=true;
-        for(int i=up;i<down;i++)
-            for(int j=left;j<right;j++)
-                if(grid[i][j]!=grid[up][left]){
-                    allsame=false;
+    Node* dfs( vector<vector<int>>& grid, int left, int right, int top, int bottom){
+        // check if the current grid has same values
+        int allValSame= true;
+        for(int i=top; i<=bottom; i++){
+            for(int j=left; j<=right; j++){
+                if( grid[i][j] != grid[top][left]){
+                    allValSame= false;
                     break;
                 }
-        
-        Node*result;
-        
-        if(allsame)
-            result = new Node(grid[up][left],1);
-    
-        else{
-            result = new Node();
-            int midrightleft=(left+right)/2;
-            int midupdown=(up+down)/2;
-            result->topLeft = helper(grid,up,midupdown,left,midrightleft);
-            result->topRight = helper(grid,up,midupdown,midrightleft,right);
-            result->bottomLeft = helper(grid,midupdown,down,left,midrightleft);
-            result->bottomRight = helper(grid,midupdown,down,midrightleft,right);
+            }
+            if( allValSame == false)
+                break;
         }
-        return result;
+        
+        // 2 types of nodes are formed:
+        // 1. when all cells have same values (its a leaf node, so isleaf=true, and val=whatever it is)
+        // 2. when all cells dont have same values( its a non-leaf node, so isleaf= false, val = either 0 or 1, ur wish)
+        
+        if( allValSame == true)
+            return new Node(grid[top][left] , 1);
+        else{
+            
+            Node* root = new Node();
+            int midLtoR= (left+right)/2;
+            int midTtoB = (top+bottom)/2;
+            root->topLeft= dfs( grid, left, midLtoR, top, midTtoB);
+            root->topRight= dfs(grid, midLtoR+1, right, top, midTtoB);
+            root->bottomLeft = dfs(grid, left,midLtoR, midTtoB+1, bottom);
+            root->bottomRight = dfs(grid, midLtoR+1, right, midTtoB+1, bottom);
+            
+            return root;
+        }
+        
+        
     }
     Node* construct(vector<vector<int>>& grid) {
-        return helper(grid,0,grid.size(),0,grid.size());
+        int n= grid.size();
+        return dfs(grid, 0, n-1, 0, n-1);
     }
 };
