@@ -21,7 +21,7 @@ public:
     string DFS(TreeNode* root, unordered_map<string, int>& m, vector<TreeNode*>& res){
         if(!root) return "";
         string s =  "L" + DFS(root->left, m, res)  +" "+ to_string(root->val) + " "+ DFS(root->right, m, res) +  "R" ;
-        if(m[s]++ == 1) res.push_back(root);
+        if(++m[s] == 2) res.push_back(root);
         return s;
     }
 };
