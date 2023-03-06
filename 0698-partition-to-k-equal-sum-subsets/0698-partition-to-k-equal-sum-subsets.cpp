@@ -5,7 +5,7 @@ public:
         int n= nums.size();
         int sum = accumulate(nums.begin(), nums.end(), 0);
 
-
+        sort(nums.begin(), nums.end(), greater<int>());
         return ( (sum%k ==0) and dfs( nums, k, 0, 0, sum/k ));
     }
 
