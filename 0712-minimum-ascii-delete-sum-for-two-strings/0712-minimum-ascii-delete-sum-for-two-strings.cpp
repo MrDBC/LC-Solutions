@@ -1,45 +1,31 @@
 class Solution {
-    // int dp[1001][1001];
+    vector<vector<int>> dp;
 public:
-    vector<vector<int>> dp; // we will store all our answers here and then get values for all future references
-    
-    int dead_end_sum(string &s , int i) // one of the string id empty , so all ASCII sums from ith character till end of string
-    {
-        int sum = 0;
-        for( ; i<s.length() ; i++)
-            sum+=int(s[i]);
-        return sum;
+    int minimumDeleteSum(string s1, string s2) {
+        int m= s1.size(), n= s2.size();
+        
+        dp.resize(m+1,vector<int>(n+1,-1));
+        
+        return deleteNonLcs(s1,s2, m, n);
     }
     
-    int sub(string &a, string &b, int i, int j) // sub problem
-    {
-        int n = a.length();
-        int m = b.length();
-        int sum = 0;
-        if(i==n || j==m)
-        {
-            if(i==n and j==m)   return 0;
-            return (i==n) ? dead_end_sum(b,j) : dead_end_sum(a,i);
+    int deleteNonLcs(string& s1, string& s2, int m, int n){
+        if (dp[m][n] != -1) {
+            return dp[m][n];
         }
+        if( !m and !n )
+            return 0;
+        if(!m)
+            return accumulate(s2.begin(), s2.begin()+n, 0);
+        if( !n)
+            return accumulate(s1.begin(), s1.begin()+m, 0);
         
-        if(dp[i][j] != -1)            return dp[i][j];      // we know the answer so no need to recompute , reture it as it is.
-    
-        if(a[i] == b[j])
-            sum = sub(a,b,i+1,j+1);
+        int ans = 0;
+        if( s1[m-1] == s2[n-1])
+            ans = 0 + deleteNonLcs(s1,s2,m-1,n-1);
         else
-        {
-            sum = min({ sub(a,b,i+1,j) + int(a[i]) ,                // option  1
-                        sub(a,b,i,j+1) + int(b[j])});              // option 2
-        }      
-        dp[i][j] = sum;     // we store our answer at each step
-        return sum;
-    }
-    int minimumDeleteSum(string a, string b) {
+            ans = min( int(s1[m-1]) + deleteNonLcs(s1,s2,m-1,n) , int(s2[n-1]) + deleteNonLcs(s1,s2,m,n-1));
         
-        // making of DP matrix to store result and initilizing it to -1
-        dp = vector<vector<int>>(a.length()+1, vector<int>(b.length()+1 , -1));
-        return sub(a,b,0,0);
-        
-        return 0;
+        return dp[m][n] = ans;
     }
 };
