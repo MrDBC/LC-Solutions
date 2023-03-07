@@ -13,7 +13,8 @@ public:
         int n= time.size();
         
         long long time_start = 1, time_end= 10e13;// (long long)(*min_element(begin(time), end(time))) * totalTrips; 
-        while( time_start < time_end){
+        long long ans =-1;
+        while( time_start <= time_end){
             long long mid_time = time_start + (time_end - time_start )/2;
             
             // cout<<time_start<<" "<<mid_time<<" "<<time_end<<endl;
@@ -21,14 +22,14 @@ public:
             long long trips_covered = findTotalTripsCovered(time, mid_time);
             
             if(trips_covered >= totalTrips ){
-                
-                time_end = mid_time;
+                ans= mid_time;
+                time_end = mid_time-1;
             }
             else
                 time_start= mid_time+1;
             
         }
         
-        return time_end;
+        return ans;
     }
 };
