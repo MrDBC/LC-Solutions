@@ -1,5 +1,6 @@
 class Solution {
     unordered_map<int, int> index;
+    int dp[1001][1001];
 public:
     int lenLongestFibSubseq(vector<int>& arr) {
         int n= arr.size();
@@ -7,6 +8,7 @@ public:
         for(int i=0; i<n; i++)
             index[arr[i]]=i;
         
+        memset(dp, -1, sizeof(dp));
         int maxlen = 0;
         
         // (a, b , c)
@@ -17,13 +19,15 @@ public:
         return (maxlen !=0)? maxlen +2: 0 ;
     }
     int dfs( vector<int>& arr, int a, int b){
+        if( dp[a][b] != -1)
+            return dp[a][b];
         
         int val_c = (arr[a] + arr[b]) ;
         
         if( index.find(val_c) != index.end() )
-            return  1+ dfs(arr, b, index[val_c]);
+            return  dp[a][b]= 1+ dfs(arr, b, index[val_c]);
         else
-            return 0;
+            return dp[a][b]= 0;
         
         
     }
