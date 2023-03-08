@@ -10,18 +10,18 @@ public:
         int maxlen = 0;
         
         // (a, b , c)
-        for(int c=2; c<n; c++)
-            for(int b=c-1; b>=1; b--)
-                maxlen = max(maxlen, dfs(arr, b, c));
+        for(int a=0; a<= n-3; a++)
+            for(int b=a+1; b<=n-2; b++)
+                maxlen = max(maxlen, dfs(arr, a, b));
        
         return (maxlen !=0)? maxlen +2: 0 ;
     }
-    int dfs( vector<int>& arr, int b, int c){
+    int dfs( vector<int>& arr, int a, int b){
         
-        int val_a = (arr[c] - arr[b]) ;
+        int val_c = (arr[a] + arr[b]) ;
         
-        if( index.find(val_a) != index.end() and index[val_a] < b)
-            return  1+ dfs(arr, index[val_a], b);
+        if( index.find(val_c) != index.end() )
+            return  1+ dfs(arr, b, index[val_c]);
         else
             return 0;
         
