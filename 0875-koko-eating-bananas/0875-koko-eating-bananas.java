@@ -5,10 +5,13 @@ class Solution {
         for(int i=0;i<piles.length;i++){
             high=Math.max(high,piles[i]);
         }
-        while(low<high){
+        
+        int ans= -1;
+        while(low<=high){
             int mid=low+(high-low)/2;
             if(blackbox(mid,piles,h)){
-                high=mid;
+                ans = mid;
+                high=mid-1;
             }
             else
                 low=mid+1;
@@ -16,7 +19,7 @@ class Solution {
         return low;
     }
     public boolean blackbox(int maxpiles,int[] piles,int h){
-        int hours=0;
+        long hours=0;
         for(int i:piles){
             int time=i/maxpiles;
             hours+=time;
