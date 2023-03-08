@@ -8,15 +8,11 @@ public:
             index[arr[i]]=i;
         
         int maxlen = 0;
+        
         // (a, b , c)
-        for(int c=2; c<n; c++){
-            for(int b=c-1; b>=1; b--){
-                
-                // int val_a = arr[c] - arr[b];
-                // if( index.count(val_a))  // +1 for counting val_c
+        for(int c=2; c<n; c++)
+            for(int b=c-1; b>=1; b--)
                 maxlen = max(maxlen, dfs(arr, b, c));
-            }
-        }
        
         return (maxlen !=0)? maxlen +2: 0 ;
     }
