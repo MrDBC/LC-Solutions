@@ -16,13 +16,16 @@ public:
             return dp[i][j];
         
         int minscore = INT_MAX;
-        // fix any 2 consecutive vertices and 
+        // fix vertices i & j and select a 3 vertex lying in range (i, j)  
+        // [non- including i & j ofc \U0001f602]
+        // form a triangle using (i , k, j) and then 
         // recurse for the sub-polygons
         
         for(int k=i+1; k<j; k++){
             
-            minscore = min( minscore, (values[i]* values[k] * values[j] ) +
-                domcm(values, i,k) + domcm(values, k,j) );
+            // score of forming triangle (i, k, j)
+            int tri_score = (values[i]* values[k] * values[j] ) ;
+            minscore = min( minscore, tri_score+ domcm(values, i,k) + domcm(values, k,j) );
         }
         
         return dp[i][j] = minscore;
