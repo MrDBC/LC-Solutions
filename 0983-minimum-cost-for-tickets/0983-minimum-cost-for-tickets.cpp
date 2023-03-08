@@ -1,44 +1,24 @@
 class Solution {
-    int dp[365];
+    int dp[365+1];
 public:
-    
-    
     int mincostTickets(vector<int>& days, vector<int>& costs) {
-        int n= days.size();
-        memset(dp, -1, sizeof(dp));
-        return dfs(days, 0, n, costs);
-    }
-    
-    int dfs(vector<int>& days, int idx  , int n, vector<int>& costs ){
-        if( idx>=n)
-            return 0;
         
-        if( dp[idx] != -1)
-            return dp[idx];
-        int mincost = INT_MAX;
-        for(int i=0; i<3; i++){
-            int start_day = days[idx];
-            int end_day = start_day + ((i==0)? 0: ((i==1)? 6 : 29 ));
-            
-            int k;
-            for( k= idx; k<n; k++){
-                int curr_day = days[k];
-                
-                if( curr_day> end_day)
-                    break;
+        int n= days.size();
+        memset(dp, 0, sizeof(dp));
+        
+        // 1 2 3 4 5 6 7 8
+        unordered_set<int> travelDays(begin(days), end(days));
+        for(int day=1; day<=365; day++){
+            if( travelDays.count(day)){
+                dp[day]= min( costs[0] + dp[day-1], min(
+                                costs[1] + (day>=7? dp[day-7] : 0), 
+                                costs[2] + (day>=30? dp[day-30] : 0)));
             }
-            
-            // take a one day pass, 7 day pass or 30 day pass and do recursive calls
-            if( i==0)
-                mincost = min(mincost, costs[0] + dfs(days, k , n, costs));
-            else if( i==1)
-                mincost = min(mincost, costs[1] + dfs(days, k , n, costs));
-            else 
-                mincost = min(mincost, costs[2] + dfs(days, k , n, costs));
-      
-      
+            else
+                dp[day]= dp[day-1];
         }
         
-        return dp[idx]= mincost;
+        return dp[365];
+        
     }
 };
