@@ -11,7 +11,11 @@
  */
 class Solution {
 public:
-    TreeNode* dfs( vector<int>& preorder, int i, int j){
+    
+    TreeNode* bstFromPreorder(vector<int>& preorder, int i=0, int j=-1) {
+        if( j==-1)
+            j=preorder.size()-1;
+        
         if( i>j)
             return NULL;
         
@@ -22,13 +26,9 @@ public:
         
         
         TreeNode* root = new TreeNode(preorder[i]);
-        root->left = dfs(preorder, i+1, k-1);
-        root->right = dfs( preorder, k, j);
+        root->left = bstFromPreorder(preorder, i+1, k-1);
+        root->right = bstFromPreorder( preorder, k, j);
         
         return root;
-    }
-    TreeNode* bstFromPreorder(vector<int>& preorder) {
-        
-        return dfs( preorder, 0, preorder.size()-1);
     }
 };
