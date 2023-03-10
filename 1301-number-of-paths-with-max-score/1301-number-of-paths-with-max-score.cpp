@@ -46,9 +46,7 @@ public:
         if( max_path[0] == down_right[0])
             max_path[1]= (max_path[1]+down_right[1])%mod;
         
-        // cout<< i<<" "<<j<<" "<<stoi(board[i][j])<<endl;
-        max_path[0] += (board[i][j] == 'E')? 0: board[i][j]-48 ;
-        max_path[0]%=mod;
+        max_path[0] += (board[i][j] == 'E')? 0: board[i][j]-'0' ;
         return dp[i][j]= max_path;
     }
    
