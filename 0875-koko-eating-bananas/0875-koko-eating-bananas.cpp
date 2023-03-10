@@ -1,33 +1,30 @@
-class Solution {
-public:
-    long long getHoursToEatAll(vector<int>&piles, int bananasPerHour)
-    {
-        long long totalHours = 0;
-        for (int i = 0; i < piles.size(); i++)
-        {
-            int hoursToEatPile = ceil(piles[i] / (double)bananasPerHour);
-            totalHours += hoursToEatPile;
+ class Solution {
+     public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int l = 1,m =0;
+        for(int i=0;i<piles.size();i++){
+            m = max(m,piles[i]);
         }
-        return totalHours;
-    }
-    int minEatingSpeed(vector<int>& piles, int targetHours)
-    {
-        int low = 1, high = *(max_element(piles.begin(), piles.end()));
-        int ans = -1;
-        //================================================================
-        while(low <= high)
-        {
-            int mid = low + (high - low) / 2;
-            long long hoursToEatAll = getHoursToEatAll(piles, mid);
-            
-            if (hoursToEatAll <= targetHours)
-            {
-                ans = mid; //record the answer (this is the best we could record till curr step)
-                high = mid - 1;
+        while(l<=m){
+            int mid = (l+m)/2;
+            unsigned int tot = 0;
+            cout<<mid<<" ";
+            for(int i=0;i<piles.size();i++){
+                
+                tot+=(piles[i]/mid);
+                
+                if(piles[i]%mid)
+                    tot++;
             }
-            else low = mid + 1;
+            
+            cout<<tot<<endl;
+            if(tot>h){
+                l = mid+1;
+            }
+            else
+                m = mid-1;
         }
-        //=================================================================
-        return ans;
+        return l;
     }
+
 };
