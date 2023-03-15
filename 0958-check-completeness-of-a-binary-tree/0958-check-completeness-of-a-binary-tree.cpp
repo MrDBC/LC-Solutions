@@ -15,41 +15,28 @@ public:
         
         queue<TreeNode*> q;
         q.push(root);
+      
         
-        int h=0;
+        bool encounteredNull = false;
         while( !q.empty()){
-            int currLevelNodes = pow(2,h);
             
             int sz = q.size();
-            bool incompleteNode = false;
+            
             for(int i=0; i<sz; i++){
                 TreeNode* curr = q.front();
-                --currLevelNodes;
                 q.pop();
                     
-                // at the same level, we have nodes to the left which are incomplete
-                // and this node(on the right) has children, 
-                // or
-                // curr node has right child but no left child
-                // return false
-                if( (incompleteNode and ( curr->right or curr->left)) || (!curr->left and curr->right))
+                if( curr && encounteredNull)
                     return false;
-                
-                // just checking whether any node to the left doesnt have 2 children
-                if( !curr->left or !curr->right)
-                    incompleteNode = true;
-                
-                if( curr->left)
+                if( curr)
                     q.push(curr->left);
-                if (curr->right)
+                if( curr)
                     q.push(curr->right);
+                else
+                    encounteredNull = true;
                 
             }
-            ++h;
             
-            // we could have less than 2^h nodes only at the last level
-            if( !q.empty() and currLevelNodes!=0)
-                return false;
         }
         
         return true;
