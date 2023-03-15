@@ -10,35 +10,22 @@
  * };
  */
 class Solution {
+    int totalNodes ;
 public:
     bool isCompleteTree(TreeNode* root) {
-        
-        queue<TreeNode*> q;
-        q.push(root);
-      
-        
-        bool encounteredNull = false;
-        while( !q.empty()){
-            
-            int sz = q.size();
-            
-            for(int i=0; i<sz; i++){
-                TreeNode* curr = q.front();
-                q.pop();
-                    
-                if( curr && encounteredNull)
-                    return false;
-                if( curr)
-                    q.push(curr->left);
-                if( curr)
-                    q.push(curr->right);
-                else
-                    encounteredNull = true;
-                
-            }
-            
-        }
-        
-        return true;
+        totalNodes = count(root);
+        return dfs(root,0);
+    }
+    bool dfs(TreeNode* root, int idx){
+        if( !root)
+            return true;
+        if( idx >= totalNodes)
+            return false;
+        return dfs(root->left, idx*2+1) and dfs(root->right, idx*2+2);
+    }
+    int count(TreeNode* root){
+        if( !root)
+            return 0;
+        return 1+ count(root->left) + count(root->right);
     }
 };
