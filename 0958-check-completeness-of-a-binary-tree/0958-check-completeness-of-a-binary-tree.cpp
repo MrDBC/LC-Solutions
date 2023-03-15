@@ -28,7 +28,10 @@ public:
                 q.pop();
                     
                 // at the same level, we have nodes to the left which are incomplete
-                // and this node(on the right) has children, return false
+                // and this node(on the right) has children, 
+                // or
+                // curr node has right child but no left child
+                // return false
                 if( (incompleteNode and ( curr->right or curr->left)) || (!curr->left and curr->right))
                     return false;
                 
@@ -43,6 +46,8 @@ public:
                 
             }
             ++h;
+            
+            // we could have less than 2^h nodes only at the last level
             if( !q.empty() and currLevelNodes!=0)
                 return false;
         }
