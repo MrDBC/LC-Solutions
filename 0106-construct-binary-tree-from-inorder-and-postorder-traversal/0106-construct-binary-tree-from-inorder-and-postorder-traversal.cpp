@@ -11,10 +11,14 @@
  */
 class Solution {
     int postIdx ;
+    unordered_map<int, int> inorderIdx;
 public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         int n= postorder.size();
         postIdx= n-1;
+        
+        for(int i=0; i<inorder.size(); i++)
+            inorderIdx[inorder[i]]= i;
         
         return dfs(inorder, 0, n-1, postorder);
     }
@@ -26,10 +30,10 @@ public:
         int root_val = postorder[postIdx--];
         TreeNode* root = new TreeNode(root_val);
         
-        int i;
-        for( i=in_left; i<=in_right; i++)
-            if( inorder[i]== root_val)
-                break;
+        int i= inorderIdx[root_val];
+        // for( i=in_left; i<=in_right; i++)
+        //     if( inorder[i]== root_val)
+        //         break;
         
         root->right = dfs(inorder, i+1, in_right, postorder);
         root->left = dfs(inorder, in_left, i-1, postorder);
