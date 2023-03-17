@@ -14,9 +14,9 @@ public:
     Trie() {
         root = new TrieNode();
     }
-    ~Trie(){
-        clear(root);
-    }
+    // ~Trie(){
+    //     clear(root);
+    // }
     void clear(TrieNode* root){
         for(int i=0; i<26; i++)
             if( root->children[i] != nullptr)
