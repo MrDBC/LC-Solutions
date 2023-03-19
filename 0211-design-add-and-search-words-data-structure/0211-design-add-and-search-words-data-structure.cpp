@@ -8,10 +8,11 @@ public:
     }
 };
 class WordDictionary {
-    TrieNode* root;
+    TrieNode* root, *node;
 public:
     WordDictionary() {
         root= new TrieNode();
+        node = root;
     }
     
     void addWord(string word) {
@@ -25,31 +26,30 @@ public:
         }
         temp->isend= true;
     }
-    
-    bool searchdfs(string word, int idx, TrieNode* node){
-        if( idx== word.size())
-            return node->isend;
-        char ch= word[idx];
 
-        if( ch=='.'){
-            for(int i=0;i <26; i++){
-                if( node->children[i] && searchdfs(word, idx+1, node->children[i]))
-                    return true;
-            }
-            return false;
-        }
-        else{
-            if( node->children[ch-'a'])
-                return searchdfs( word, idx+1, node->children[ch-'a'] );
-            else
-                return false;
-        }
+    bool search(string word){
+        return searchdfs(word, root);
     }
+    bool searchdfs(string word, TrieNode* node ) {
         
-
-    bool search(string word) {
-    
-        return searchdfs(word,0, root);    
+        for(int i=0; i<word.size(); i++){
+            char ch=word[i];
+            if( ch=='.'){
+                 for(int idx=0;idx <26; idx++)
+                    if( node->children[idx] && searchdfs(word.substr(i+1), node->children[idx]))
+                        return true;
+                return false;
+            }
+               
+            else{
+                if( node->children[ch-'a'])
+                    node= node->children[ch-'a'] ;
+                else
+                    return false;
+            }
+        }
+        
+        return node and node->isend;
     }
 };
 
