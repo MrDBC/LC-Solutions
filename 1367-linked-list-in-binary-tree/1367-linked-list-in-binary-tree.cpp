@@ -40,13 +40,11 @@ public:
             dfs( head->next, root->right, 1);
             
             //case 3: 
-            dfs( head, root->left, 0);
-            dfs(head, root->right, 0);
         }
-        else{
-            dfs( head, root->left, 0);
-            dfs(head, root->right, 0);
-        }
+        
+        dfs( head, root->left, 0);
+        dfs(head, root->right, 0);
+        
     }
     bool isSubPath(ListNode* head, TreeNode* root) {
         llhead=head;
