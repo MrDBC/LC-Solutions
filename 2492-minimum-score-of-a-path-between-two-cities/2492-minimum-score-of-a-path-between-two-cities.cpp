@@ -1,4 +1,5 @@
 class Solution {
+    int minscore = INT_MAX;
 public:
     int minScore(int n, vector<vector<int>>& roads) {
         
@@ -8,34 +9,23 @@ public:
             g[u].push_back(make_pair(v, dist));
             g[v].push_back(make_pair(u, dist));
         }
-
-        
-        
-        int minscore = INT_MAX;
-        queue<int> q;
-        q.push(1);
         
         vector<int> visited(n+1, 0);
         
-        while(!q.empty()){
-            int sz = q.size();
-            
-            for(int i=0; i<sz; i++){
-                int u = q.front();
-                visited[u]=1;
-                q.pop();
-                
-                for(auto x: g[u]){
-                    int v= x.first , dist=x.second;
-                    if( visited[v] != 0)
-                        continue;
-                    
-                    minscore= min( minscore, dist);
-                    q.push(v);
-                }
-            }
-        }
-        
+        dfs( g, 1, visited);
         return minscore;
+    }
+    void dfs(vector<pair<int, int>> g[], int city,vector<int> &visited){
+        
+        if( visited[city] ==1)
+            return;
+        
+        visited[city]= 1;
+        for(auto x: g[city]){
+            int v= x.first , dist=x.second;
+            
+            minscore= min( minscore, dist);
+            dfs( g, v, visited);
+        }
     }
 };
