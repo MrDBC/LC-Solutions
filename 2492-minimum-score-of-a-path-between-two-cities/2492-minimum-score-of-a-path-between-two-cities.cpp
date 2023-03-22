@@ -15,18 +15,21 @@ public:
         queue<int> q;
         q.push(1);
         
-        unordered_set<int> visited;
+        int visited[n+1];
+        for(int i=1; i<=n; i++)
+            visited[i]=0;
+        
         while(!q.empty()){
             int sz = q.size();
             
             for(int i=0; i<sz; i++){
                 int u = q.front();
-                visited.insert(u);
+                visited[u]=1;
                 q.pop();
                 
                 for(auto x: g[u]){
                     int v= x.first , dist=x.second;
-                    if( visited.find(v) != visited.end())
+                    if( visited[v] != 0)
                         continue;
                     
                     minscore= min( minscore, dist);
