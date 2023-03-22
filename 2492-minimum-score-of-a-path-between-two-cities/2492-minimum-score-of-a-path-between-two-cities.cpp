@@ -15,9 +15,7 @@ public:
         queue<int> q;
         q.push(1);
         
-        int visited[n+1];
-        for(int i=1; i<=n; i++)
-            visited[i]=0;
+        vector<int> visited(n+1, 0);
         
         while(!q.empty()){
             int sz = q.size();
