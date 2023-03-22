@@ -5,10 +5,8 @@ public:
         unordered_set<string> us;
         for(auto str:wordDict)
             us.insert(str);
-        
-        string word="", sentence="";
     
-        dfs( s, 0, word, sentence,0, us);
+        dfs( s, 0, "", "",0, us);
         return res;
     }
     
@@ -16,8 +14,9 @@ public:
     void dfs( string& s, int idx, string word, string sentence, int cnt, unordered_set<string>& us ){
        
         if( idx== s.size() ){
+            
             // this confirms we have included every character in our original "s" into our "sentence" as well
-            if(sentence.size()== s.size()+cnt){
+            if(sentence.size() == s.size()+cnt){
                 sentence.pop_back();
                 res.push_back(sentence);
             }
@@ -26,9 +25,11 @@ public:
         
         word+=s[idx];
         
+        // our dictionary contains "word", so add it to the sentence, and reinitialize word to empty string
         if( us.find(word) != us.end())
             dfs(s, idx+1, "", sentence+word+" ", cnt+1,us); 
         
+        // we want to see other options
         dfs(s, idx+1, word, sentence, cnt, us);
     }
 };
