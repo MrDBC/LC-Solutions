@@ -1,33 +1,32 @@
-#define MAX 5000
+
 class Solution {
 public:
-    int dp[21][2*MAX];
-    int tall(int idx,int leftsum,int rightsum,vector<int>& rods)
-    {   
-      //  string temp=to_string()
-
-        if(idx==rods.size()){
-            if(leftsum==rightsum)return 0; //if both subset have equal sum
-            return INT_MIN;
+    int dp[21][5000+1];
+    int dfs(int idx,int leftsum, int rightsum,vector<int>& rods)
+    {
+        if(idx == rods.size()){
+            if(leftsum==rightsum)
+                return 0; //if both subset have equal sum
+            return -50001;
         }
-        if(dp[idx][leftsum-rightsum+MAX]!=-1)return dp[idx][leftsum-rightsum+MAX];
+        
+        int diff = abs(leftsum-rightsum);
+        
+        if(dp[idx][diff] != -1)
+            return dp[idx][diff];
 
-        int best=INT_MIN;
-
-        best = tall(idx+1,leftsum,rightsum,rods);//do not pick
-        best = max(best,tall(idx+1,leftsum+rods[idx],rightsum,rods)+rods[idx]); //in the lest subset
-        best = max(best,tall(idx+1,leftsum,rightsum+rods[idx],rods));//pick in the right subset
-
-
-        dp[idx][leftsum-rightsum+MAX]=best;
-        return dp[idx][leftsum-rightsum+MAX];
-
+        int donttake = dfs(idx+1, leftsum, rightsum, rods);
+        int addtoleft = rods[idx] + dfs(idx+1, leftsum + rods[idx], rightsum, rods);
+        int addtoright = rods[idx] + dfs(idx+1, leftsum , rightsum + rods[idx], rods);
+        
+        
+        return dp[idx][diff] = max(donttake, max(addtoleft, addtoright));
     }
     int tallestBillboard(vector<int>& rods) {
 
         memset(dp,-1,sizeof(dp));
 
-        return tall(0,0,0,rods);
+        return dfs(0,0,0,rods)/2;
         
     }
 };
