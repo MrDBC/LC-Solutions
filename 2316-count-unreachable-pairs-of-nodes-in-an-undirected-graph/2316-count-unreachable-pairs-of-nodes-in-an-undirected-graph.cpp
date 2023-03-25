@@ -19,19 +19,19 @@ public:
         }
         
         long long cnt=0;
-        // res    - 4 2 1
+        // result - 4 2 1
         // prefix -   4 6 7
-        //        (2*4) + (1*6) = 14
+        //        (2*4) + (1*6) = 14 
+        // general forumala = summation { prefix[i-1] * resullt[i] }
         
-        vector<long long > pre(res.size());
-        pre[0]= res[0];
-        for(int i=1; i<res.size(); i++){
-            pre[i] = pre[i-1] + res[i];
-        }
-        for(int i=0; i <pre.size()-1; i++){
-           cnt+= pre[i]* res[i+1];
-        }
+        long long precnt=res[0];
         
+        for(int i=1; i <res.size(); i++){
+            
+            cnt+= precnt* res[i];
+            precnt+= res[i];
+        }
+            
         return cnt;
     }
     int dfs( int node,  vector<int>& visited, vector<vector<int>>& g){
