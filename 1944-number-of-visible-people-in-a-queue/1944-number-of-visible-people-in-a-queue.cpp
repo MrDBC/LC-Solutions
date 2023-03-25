@@ -12,8 +12,8 @@ public:
             // stack is already monotonic increasing one 
             // even after insertion of currrent height
             // so its obvious we can only see the next height only
-            if( !st.empty() and st.top()> heights[i])
-                res[i]=1;
+            // if( !st.empty() and st.top()> heights[i])
+            //     res[i]=1;
             
             // pop all the heights having heights <= current height
             // now the total heights we can see is the no. of popped 
@@ -25,8 +25,8 @@ public:
                 st.pop();
                 ++howmany;
             }
-            if( howmany>0)
-                res[i]= howmany+ (!st.empty()? 1: 0);
+            // if( howmany>0)
+            res[i]= howmany+ (!st.empty()? 1: 0);
 
             // push current height into the stack
             st.push(heights[i]);
