@@ -1,6 +1,8 @@
 class Solution {
     unordered_set<int> setdays;
     int dp[365+1];
+    // dp[d] indicates the min. cost to travel among the dates
+    // lying b/w [1 to d]
 public:
     int mincostTickets(vector<int>& days, vector<int>& costs) {
         for(auto d: days)
