@@ -10,24 +10,25 @@
  * };
  */
 class Solution {
-    int total=0;
+    // int total=0;
 public:
-    void dfs( TreeNode* root){
+    void dfs( TreeNode* root, int& total){
         if( !root)
             return;
         
-        dfs( root->right);
+        dfs( root->right, total);
         root->val+= total;
         total= root->val; // 15, 21
         
-        dfs( root->left);
+        dfs( root->left, total);
     }
     TreeNode* bstToGst(TreeNode* root) {
         
         // CALL RIGHT subtree, return its sum
         // add that sum to current rootnode
         // return this for the left subtree
-        dfs( root);
+        int total=0;
+        dfs( root, total);
         return root;
         
     }
