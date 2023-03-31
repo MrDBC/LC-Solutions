@@ -21,8 +21,8 @@ public:
         int m= pizza.size(), n= pizza[0].size();
         
         bool apples_left = checkapple(pizza, rowstart, m-1, colstart, n-1);
-        if (cuts > 0 && apples_left==0 ) 
-            return 0;
+        // if (cuts > 0 && apples_left==0 ) 
+        //     return 0;
 
         if( cuts==0)
             return apples_left==1;
