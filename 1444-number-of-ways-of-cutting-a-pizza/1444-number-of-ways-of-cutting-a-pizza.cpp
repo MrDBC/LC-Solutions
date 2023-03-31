@@ -23,7 +23,7 @@ public:
         bool apples_left = checkapple(pizza, rowstart, m-1, colstart, n-1);
 
         if( cuts==0)
-            return apples_left==1;
+            return apples_left== true;
         
         if( dp[cuts][rowstart][colstart] != -1)
             return dp[cuts][rowstart][colstart];
