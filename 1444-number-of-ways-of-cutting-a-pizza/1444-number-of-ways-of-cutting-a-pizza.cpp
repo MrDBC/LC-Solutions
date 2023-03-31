@@ -30,18 +30,17 @@ public:
         
         /// horizontal cutting
         int horizontalcuts=0;
-        for(int r=rowstart; r< m-1; r++){
+        for(int r=rowstart; r< m-1; r++)
             if( checkapple(pizza, rowstart, r, colstart, n-1))
                 horizontalcuts= (horizontalcuts + dfs(pizza, cuts-1, r+1, colstart))%mod;
-        }
             
         // vertical cutting
         int verticalcuts=0;
-        for(int c=colstart; c< n-1; c++){
+        for(int c=colstart; c< n-1; c++)
             if( checkapple(pizza, rowstart, m-1, colstart, c))
                 verticalcuts= (verticalcuts + dfs(pizza, cuts-1, rowstart, c+1))%mod;
-        }
         
-        return dp[cuts][rowstart][colstart]= (horizontalcuts%mod + verticalcuts%mod )%mod;
+        
+        return dp[cuts][rowstart][colstart]= (horizontalcuts + verticalcuts )%mod;
     }
 };
