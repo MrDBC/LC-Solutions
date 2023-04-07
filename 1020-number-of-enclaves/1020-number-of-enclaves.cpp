@@ -7,7 +7,7 @@ public:
         // intuition: we will start from a edge cell(which is a land)
         // and do a dfs, we return if we encounter a water cell,
         // but we keep on traversing while we encounter land cells, and
-        // convert them into (water cell)
+        // convert them into (water cells)
         // we then do a rescan of the matrix after all the dfs calls
         // and return the no of land cells
         for(int i=0; i<m; i++)
