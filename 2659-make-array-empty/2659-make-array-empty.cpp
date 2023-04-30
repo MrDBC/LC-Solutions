@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // https://leetcode.com/problems/make-array-empty/discuss/3466716/
     long long countOperationsToEmptyArray(vector<int>& A) {
         long long ans = 1;
         int n = A.size();
