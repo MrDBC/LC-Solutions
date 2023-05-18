@@ -4,7 +4,7 @@ public:
         // vector<vector<int>> g(n);
         
         
-        set<int> us;
+        unordered_set<int> us;
         vector<int> res;
         for(int i=0; i< n; i++){
             // g[edges[i][0]].push_back(edges[i][1]);
