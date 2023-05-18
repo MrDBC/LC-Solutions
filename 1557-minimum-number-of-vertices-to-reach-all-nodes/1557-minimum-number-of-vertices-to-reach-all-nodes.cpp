@@ -6,16 +6,17 @@ public:
         
         unordered_set<int> us;
         vector<int> res;
-        for(int i=0; i<edges.size(); i++){
+        for(int i=0; i< n; i++){
             // g[edges[i][0]].push_back(edges[i][1]);
-            us.insert(edges[i][1]);
+            us.insert(i);
         }
         
         
-        for(int i=0; i<n; i++)
-            if ( us.find(i) == us.end())
-                res.emplace_back(i);
+        for(int i=0; i<edges.size(); i++)
+            us.erase(edges[i][1]);
         
+        for(auto node: us)
+            res.emplace_back(node);
         
         return res;
         
