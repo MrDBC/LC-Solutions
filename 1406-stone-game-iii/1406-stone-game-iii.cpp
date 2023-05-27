@@ -1,30 +1,33 @@
 class Solution {
-    // dp[i] denotes max. value Alice can pick up from (i....n-1)
-    int dp[50001] = {[0 ... 50000] = INT_MIN};
+    
 public:
-    string stoneGameIII(vector<int>& arr) {
-        int n= arr.size();
+    string stoneGameIII(vector<int>& val) {
+        int n= val.size();
         
-        int alice_net_val=dfs(arr, 0);
+        vector<int> dp(n, -1);
         
-        return (alice_net_val==0)? "Tie": (alice_net_val > 0)? "Alice" : "Bob";
+        int alicegetsmore = dfs(val, 0, dp);
+        
+        return (alicegetsmore==0)? "Tie": (alicegetsmore > 0)? "Alice": "Bob";
     }
     
-    int dfs(vector<int>& arr, int i){
-        int n= arr.size();
+    int dfs(vector<int>& val, int idx, vector<int>& dp){
         
-        if( i==n)
+        int n = val.size();
+        if( idx==n)
             return 0;
         
-        if( dp[i] != INT_MIN)
-            return dp[i];
+        if( dp[idx] != -1)
+            return dp[idx];
         
-        int take_val =0, max_val =INT_MIN;
-        for(int k=i; k<= min(n-1, i+2); k++){
-            take_val += arr[k];
-            max_val = max(max_val, take_val - dfs(arr, k+1) );
+        
+        int optstonetake=0, maxvalucanget= INT_MIN;
+        for(int i=idx; i<= min(n-1, idx+2); i++){
+            optstonetake+= val[i];
+            
+            maxvalucanget= max( maxvalucanget, optstonetake - dfs(val, i+1, dp));
         }
         
-        return dp[i]= max_val;
+        return dp[idx]= maxvalucanget;
     }
 };
